@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const AssetsPlugin = require('assets-webpack-plugin');
@@ -32,13 +32,13 @@ const lang = new RegExp(
 
 module.exports = {
   entry: {
-    main: path.join(__dirname, 'src/index.js'),
-    minor: path.join(__dirname, 'src/minor.js'),
-    archive: path.join(__dirname, 'src/sass/archives.scss'),
-    article: path.join(__dirname, 'src/sass/article.scss')
+    main: path.join(process.cwd(), 'src/index.js'),
+    minor: path.join(process.cwd(), 'src/minor.js'),
+    archive: path.join(process.cwd(), 'src/sass/archives.scss'),
+    article: path.join(process.cwd(), 'src/sass/article.scss')
   },
   output: {
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(process.cwd(), 'dist')
   },
   plugins: [
     new MiniCssExtractPlugin({
@@ -53,25 +53,14 @@ module.exports = {
       prettyPrint: true
     }),
     new webpack.ProgressPlugin(),
-    new CleanWebpackPlugin(
-      [
-        'dist',
-        'site/data/*',
-        'site/assets/*.js',
-        'site/assets/*.css',
-        'site/assets/*.svg'
-      ],
-      {
-        exclude: ['.keep']
-      }
-    ),
+    new CleanWebpackPlugin(),
     new SpriteLoaderPlugin({ plainSprite: true }),
     new webpack.ContextReplacementPlugin(
       /highlight\.js\/lib\/languages$/,
       lang
     ),
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'src/robots.txt'), to: '.' }
+      { from: path.join(process.cwd(), 'src/robots.txt'), to: '.' }
     ])
   ],
   module: {
@@ -86,8 +75,8 @@ module.exports = {
       {
         test: /\.(gif|jpe?g|png|svg)$/i,
         exclude: [
-          path.resolve(__dirname, './src/img/posts'),
-          path.resolve(__dirname, './src/img/icons/utils')
+          path.resolve(process.cwd(), './src/img/posts'),
+          path.resolve(process.cwd(), './src/img/icons/utils')
         ],
         use: [
           {
@@ -107,7 +96,7 @@ module.exports = {
                 enabled: false
               },
               pngquant: {
-                quality: '65-90',
+                quality: [0.65, 0.90],
                 speed: 4
               },
               gifsicle: {

@@ -77,7 +77,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.(jpe?g|png)$/i,
-        exclude: path.resolve(__dirname, './src/img/icons'),
+        exclude: path.resolve(process.cwd(), './src/img/icons'),
         use: [
           {
             loader: 'file-loader',

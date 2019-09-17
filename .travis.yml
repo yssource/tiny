@@ -4,7 +4,7 @@ node_js:
   - '12'
 env:
   global:
-    - HUGO_VERSION=0.55
+    - HUGO_VERSION=0.58.2
 cache:
   yarn: true
   directories:

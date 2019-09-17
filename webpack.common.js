@@ -105,7 +105,23 @@ module.exports = {
             }
           }
         ]
-      }
+      }, // svg sprite
+      {
+        test: /\.svg$/,
+        include: path.resolve(__dirname, './src/img/icons/utils'),
+        use: [
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              extract: true,
+              spriteFilename: svgPath =>
+                `../site/assets/sprite_${path.basename(
+                  path.dirname(svgPath)
+                )}${svgPath.substr(-4)}`
+            }
+          }
+        ]
+      },
     ]
   }
 };
